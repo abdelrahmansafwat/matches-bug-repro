@@ -1,4 +1,4 @@
-import { IsString, Matches } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Matches } from 'class-validator';
 
 export const DemoValidation = {
   isABC: {
@@ -12,6 +12,9 @@ export class CreateDemoDto {
     message: 'Name is not in the correct format',
   })
   name: string;
+
+  @IsNumber()
+  @IsOptional()
   age: number;
 }
 
