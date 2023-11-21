@@ -37,8 +37,10 @@ async function bootstrap(onlyGenerateSwagger = false) {
 
   // Swagger
   const config = new DocumentBuilder()
-    .setTitle('JimberFW SignalServer')
-    .setDescription('API for the JimberFW SignalServer')
+    .setTitle('Matches Bug Reproduction')
+    .setDescription(
+      'Demo API to reproduce the bug caused by using matches in API validation',
+    )
     .setVersion('1.0.0')
     .addServer('http://localhost:3000')
     .addBearerAuth({ bearerFormat: 'JWT', type: 'http', scheme: 'bearer' })
