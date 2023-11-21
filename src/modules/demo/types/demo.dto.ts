@@ -15,7 +15,7 @@ export class CreateDemoDto {
 
   @IsNumber()
   @IsOptional()
-  age: number;
+  age?: number;
 }
 
 export class DemoDto {
