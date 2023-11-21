@@ -1,6 +1,5 @@
 import {
   ClassSerializerInterceptor,
-  Logger,
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
@@ -11,11 +10,10 @@ import {
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
-import * as fs from 'fs';
 
 import { AppModule } from './modules/app/app.module';
 
-async function bootstrap(onlyGenerateSwagger = false) {
+async function bootstrap() {
   // Init app
   const app = await NestFactory.create(AppModule);
 
@@ -54,23 +52,10 @@ async function bootstrap(onlyGenerateSwagger = false) {
       persistAuthorization: true,
     },
   };
-  const swaggerJSON = JSON.stringify(document);
-  if (
-    !fs.existsSync('./swagger.json') ||
-    swaggerJSON !== fs.readFileSync('./swagger.json').toString()
-  ) {
-    Logger.warn('swagger.json is not up to date... updating...');
-    fs.writeFileSync('./swagger.json', swaggerJSON);
-  }
-  if (onlyGenerateSwagger) {
-    Logger.warn('Only generating swagger.json... quitting...');
-    return;
-  }
 
   SwaggerModule.setup('/docs', app, document, swaggerOptions);
 
   await app.listen(3000);
 }
 
-const onlyGenerateSwagger = process.argv.includes('--only-generate-swagger');
-bootstrap(onlyGenerateSwagger);
+bootstrap();
